@@ -1,21 +1,18 @@
-package model;
+package model.field;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Field {
+import model.GameBoard;
+import model.Pawn;
+
+public abstract class Field {
 
 	private List<Pawn> pawns = new ArrayList<Pawn>();
+	protected String name = null;
 	
-	private String type;
 	
-	public String getType(){
-		return type;
-	}
-	
-	public void setType(String type){
-		this.type = type;
-	}
+	public abstract String[] execute(GameBoard gameBoard, Pawn pawn);
 	
 	public void addPawn(Pawn pawn){
 		pawns.add(pawn);
@@ -27,6 +24,10 @@ public class Field {
 	
 	public List<Pawn> getPawns(){
 		return pawns;
+	}
+
+	public String getName() {
+		return name;
 	}
 	
 }

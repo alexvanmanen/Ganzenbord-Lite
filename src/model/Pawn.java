@@ -1,4 +1,5 @@
 package model;
+import model.field.Field;
 import view.PawnView;
 
 public class Pawn {

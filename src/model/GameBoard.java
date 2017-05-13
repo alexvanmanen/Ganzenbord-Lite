@@ -2,6 +2,12 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.field.Brug;
+import model.field.Einde;
+import model.field.Field;
+import model.field.Put;
+import model.field.Standard;
+import model.field.Start;
 import view.GameBoardView;
 
 public class GameBoard {
@@ -11,14 +17,14 @@ public class GameBoard {
 
 	public GameBoard() {
 		for (int i = 0; i < 10; i++) {
-			Field field = new Field();
+			Field field = new Standard(Integer.toString(i));
 			fields.add(i, field);
-			field.setType(Integer.toString(i));
+			
 		}
-		fields.get(0).setType("Start");
-		fields.get(4).setType("Burg");
-		fields.get(7).setType("Put");
-		fields.get(9).setType("Einde");
+		fields.set(0, new Start());
+		fields.set(4, new Brug());
+		fields.set(7, new Put());
+		fields.set(9, new Einde());
 	}
 
 	public Field getFirstField() {
@@ -32,27 +38,7 @@ public class GameBoard {
 	public void movePawn(Pawn pawn, int numberOfSteps) {
 		this.relocatePawn(pawn, numberOfSteps);
 		int newLocation = this.getCurrentLocation(pawn);
-		String[] text = null;
-
-		if (newLocation == 9) {
-			pawn.setField(this.getLastField());
-			text = new String[3];
-			text[0] = "Spel gewonnen!";
-			text[1] = "Gefeliciteerd, Je hebt het einde bereikt.";
-			text[2] = "Het spel is afgelopen";
-		} else if (newLocation == 4) {
-			text = new String[3];
-			text[0] = "Burg";
-			text[1] = "Je bent op de brug beland!";
-			text[2] = "Je gaat naar plaats 6.";
-			this.movePawn(pawn, 2);
-		} else if (newLocation == 7) {
-			text = new String[3];
-			text[0] = "In de put.";
-			text[1] = "Je bent in de put gekomen.";
-			text[2] = "Je gaat terug naar start.";
-			pawn.setField(this.getFirstField());
-		}
+		String[] text = pawn.getField().execute(this, pawn);
 		this.view.update(text);
 	}
 

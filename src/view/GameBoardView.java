@@ -3,8 +3,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import model.Field;
 import model.GameBoard;
+import model.field.Field;
 
 public class GameBoardView extends Pane {
 
@@ -16,7 +16,7 @@ public class GameBoardView extends Pane {
 	private void createFields(GameBoard model) {
 		int i = 0;
 		for (Field field : model.getFields()) {
-			Label b1 = createNewButton(field.getType());
+			Label b1 = createNewButton(field.getName());
 			b1.relocate(i * 100, 0);
 			i++;
 			this.getChildren().add(b1);
